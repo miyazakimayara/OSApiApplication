@@ -6,6 +6,7 @@ package br.com.miyazaki.OSApiApplication.api.controller;
 
 import br.com.miyazaki.OSApiApplication.domain.model.Cliente;
 import br.com.miyazaki.OSApiApplication.domain.repository.ClienteRepository;
+import br.com.miyazaki.OSApiApplication.domain.service.ClienteService;
 import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class ClienteController {
     @Autowired
     private ClienteRepository clienteRepository;
     
+    @Autowired
+    private ClienteService clienteService;
+    
     @GetMapping("/clientes")
     public List<Cliente> listas(){
         return clienteRepository.findAll();
@@ -45,7 +49,7 @@ public class ClienteController {
         }
         
         cliente.setId(clienteID);
-        cliente = clienteRepository.save(cliente);
+        cliente = clienteService.salvar(cliente);
         return ResponseEntity.ok(cliente);
     }
     
@@ -53,7 +57,7 @@ public class ClienteController {
     @ResponseStatus(HttpStatus.CREATED)
     public Cliente adicionar(@Valid@RequestBody Cliente cliente){
         
-        return clienteRepository.save(cliente);
+        return clienteService.salvar(cliente);
     }
     
     @DeleteMapping("/clientes/{clienteID}")
@@ -63,7 +67,7 @@ public class ClienteController {
             return ResponseEntity.notFound().build();
         }
         
-        clienteRepository.deleteById(clienteID);
+        clienteService.excluir(clienteID);
         return ResponseEntity.noContent().build();
     }
 }
