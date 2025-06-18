@@ -23,7 +23,7 @@ import java.util.Objects;
 public class OrdemServico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
     
     @ManyToOne
     private Cliente cliente;
@@ -46,7 +46,7 @@ public class OrdemServico {
         this.preco = preco;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
@@ -123,6 +123,4 @@ public class OrdemServico {
         final OrdemServico other = (OrdemServico) obj;
         return Objects.equals(this.id, other.id);
     }
-    
-    
 }
